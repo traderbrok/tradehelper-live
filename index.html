@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP & SL Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="calculator">
+            <h2>TP & SL Calculator</h2>
+            <label for="assetSelect">Select Asset:</label>
+            <select id="assetSelect">
+                <option value="BTC-USD">BTC/USD</option>
+                <option value="ETH-USD">ETH/USD</option>
+                <option value="LTC-USD">LTC/USD</option>
+            </select>
+            <button type="button" onClick="getCurrentPrice()">Get Current Price</button>
+            <br><br>
+            <label>Entry Price:</label>
+            <input type="number" id="entryPrice" placeholder="Enter Entry Price">
+            <label>Trade Size (USD):</label>
+            <input type="number" id="tradeSize" placeholder="Enter Trade Size">
+            <label>Leverage:</label>
+            <input type="number" id="leverage" placeholder="Enter Leverage">
+            <button onClick="calculateTPSL()">Calculate TP & SL</button>
+            <h3>Take-Profit Points:</h3>
+            <div id="tp-points"></div>
+            <h3>Stop-Loss Points:</h3>
+            <div id="sl-points"></div>
+        </div>
+        <div class="saved-trades">
+            <h2>Saved Trades</h2>
+            <div id="saved-trades-list"></div>
+        </div>
+    </div>
+    <script>
+        // Function to get the current price based on the selected asset
+        async function getCurrentPrice() {
+            const asset = document.getElementById("assetSelect").value;
+            const url = `https://tp-sl-backend-980d778c0c7f.herokuapp.com/price?symbol=${asset}`;
+            
+            try {
+                const response = await fetch(url);
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById("entryPrice").value = data.price.toFixed(2);
+                    alert(`Current Price of ${data.symbol}: ${data.price.toFixed(2)}`);
+                } else {
+                    alert("Error fetching the price. Please try again.");
+                }
+            } catch (error) {
+                console.error("Error fetching the price:", error);
+                alert("Failed to fetch price. Check your internet connection or backend.");
+            }
+        }
+    </script>
+</body>
+</html>
