@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,7 +39,7 @@
         // Function to get the current price based on the selected asset
         async function getCurrentPrice() {
             const asset = document.getElementById("assetSelect").value;
-            const url = `https://tp-sl-backend-980d778c0c7f.herokuapp.com/price?symbol=${asset}`;
+            const url = `https://tp-sl-backend-045b77fdf6fd.herokuapp.com/price?symbol=${asset}`;
             
             try {
                 const response = await fetch(url);
@@ -59,3 +58,4 @@
     </script>
 </body>
 </html>
+
